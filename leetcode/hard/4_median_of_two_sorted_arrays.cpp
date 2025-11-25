@@ -1,8 +1,16 @@
 /*
-LeetCode #4: Median of Two Sorted Arrays (Hard)
+Given two sorted arrays nums1 and nums2 of size m and n respectively, return the
+median of the two sorted arrays.
 
-題目：給定兩個已排序的陣列 nums1 和 nums2，找出這兩個陣列的中位數。
-要求：時間複雜度必須是 O(log(m+n))
+The overall run time complexity should be O(log (m+n)).
+
+Constraints:
+1) nums1.length == m
+2) nums2.length == n
+3) 0 <= m <= 1000
+4) 0 <= n <= 1000
+5) 1 <= m + n <= 2000
+6) -10^6 <= nums1[i], nums2[i] <= 10^6
 
 核心概念：Binary Search on Partition Points (在分割點上做二分搜尋)
 =================================================================
