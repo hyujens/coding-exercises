@@ -44,3 +44,28 @@ int lengthOfLongestSubstring(std::string s) {
 
   return max;
 }
+
+int improvedLengthOfLongestSubstring(std::string s) {
+  if (s.empty()) {
+    return 0;
+  }
+
+  int max_len = 0;
+  int start = 0;
+  int last_seen[128];                        // 儲存每個字元最後出現的位置
+  std::fill(last_seen, last_seen + 128, -1); // 初始化為 -1
+
+  for (int end = 0; end < s.length(); end++) {
+    char curr = s[end];
+
+    // 如果當前字元在視窗內出現過，直接移動 start
+    if (last_seen[curr] >= start) {
+      start = last_seen[curr] + 1; // 跳到重複字元的下一個位置
+    }
+
+    last_seen[curr] = end;                        // 更新字元的最後位置
+    max_len = std::max(max_len, end - start + 1); // 更新最大長度
+  }
+
+  return max_len;
+}
