@@ -11,8 +11,8 @@
 
 * [v] Array - Two Sum (1) - Hash table 基本應用
 * [v] Sliding Window - Longest Substring Without Repeating (3) - 滑動窗口基礎
-* [ ] Two Pointers - Container With Most Water (11) - 雙指針思維
-* [ ] Linked List - Reverse Linked List (206) - 鏈表反轉基礎
+* [v] Two Pointers - Container With Most Water (11) - 雙指針思維
+* [v] Linked List - Reverse Linked List (206) - 鏈表反轉基礎
 * [ ] Linked List - Linked List Cycle II (142) (新增) - 快慢指針與環的檢測
 * [ ] Stack - Valid Parentheses (20) - Stack 經典應用
 * [ ] Queue/Monotonic - Sliding Window Maximum (239) - 單調隊列
