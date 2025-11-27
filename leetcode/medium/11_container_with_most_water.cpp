@@ -30,5 +30,29 @@ Constraints:
       如果都沒有，那之前就是最大。所以兩邊移動沒有影響。
 */
 
+#include <algorithm>
+#include <cstddef>
 #include <vector>
-int maxArea(std::vector<int> &height) { return 0; }
+int maxArea(std::vector<int> &height) {
+  if (height.size() <= 1) {
+    return 0;
+  }
+
+  int left = 0, right = height.size() - 1;
+  auto max_area = std::min(height[left], height[right]) * (right - left);
+  while (left < right) {
+    if (height[left] > height[right]) {
+      right--;
+    } else if (height[left] == height[right]) {
+      left++;
+      right--;
+    } else {
+      left++;
+    }
+
+    auto area = std::min(height[left], height[right]) * (right - left);
+    max_area = std::max(max_area, area);
+  }
+
+  return max_area;
+}
