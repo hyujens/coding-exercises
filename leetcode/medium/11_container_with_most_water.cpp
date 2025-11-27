@@ -55,3 +55,30 @@ int maxArea(std::vector<int> &height) {
 
   return max_area;
 }
+
+int improvedMaxArea(std::vector<int> &height) {
+  if (height.size() <= 1) {
+    return 0;
+  }
+
+  int left = 0, right = height.size() - 1;
+  int max_area = 0;
+  while (left < right) {
+    int h = std::min(height[left], height[right]);
+
+    max_area = std::max(max_area, h * (right - left));
+
+    // 下面兩個loop是針對最小的高度來比對。比這高度小，就跳過。
+    // 為什麼不管最小高度是左還是右呢?
+    // 這是因為在往中間逼近，不管左右，都會受限這高度。
+    // 也就是說，不管如何，面積都不會比較大。因此就可以安心的略過，去找下一組比這高度高的。
+    while (left < right && height[left] <= h) {
+      left++;
+    }
+    while (left < right && height[right] <= h) {
+      right--;
+    }
+  }
+
+  return max_area;
+}
