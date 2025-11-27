@@ -39,8 +39,10 @@ int maxArea(std::vector<int> &height) {
   }
 
   int left = 0, right = height.size() - 1;
-  auto max_area = std::min(height[left], height[right]) * (right - left);
+  auto max_area = 0;
   while (left < right) {
+    auto current_area = std::min(height[left], height[right]) * (right - left);
+    max_area = std::max(max_area, current_area);
     if (height[left] > height[right]) {
       right--;
     } else if (height[left] == height[right]) {
@@ -49,9 +51,6 @@ int maxArea(std::vector<int> &height) {
     } else {
       left++;
     }
-
-    auto area = std::min(height[left], height[right]) * (right - left);
-    max_area = std::max(max_area, area);
   }
 
   return max_area;
