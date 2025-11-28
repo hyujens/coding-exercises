@@ -14,7 +14,7 @@
 * [v] Two Pointers - Container With Most Water (11) - 雙指針思維
 * [v] Linked List - Reverse Linked List (206) - 鏈表反轉基礎
 * [v] Linked List - Linked List Cycle II (142) (新增) - 快慢指針與環的檢測
-* [ ] Stack - Valid Parentheses (20) - Stack 經典應用
+* [v] Stack - Valid Parentheses (20) - Stack 經典應用
 * [ ] Queue/Monotonic - Sliding Window Maximum (239) - 單調隊列
 * [ ] Complex - Trapping Rain Water (42) (新增) - 雙指針/單調棧的綜合應用（魔王題）
 
