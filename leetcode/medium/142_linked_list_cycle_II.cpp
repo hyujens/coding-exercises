@@ -76,3 +76,37 @@ ListNode *detectCycleWithSet(ListNode *head) {
 
   return nullptr;
 }
+
+ListNode *detectCycleWithFloydAlg(ListNode *head) {
+  if (head == nullptr || head->next == nullptr) {
+    return nullptr;
+  }
+
+  // slow_ptr takes one step to move, and fast_ptr takes two steps to move
+  auto slow_ptr = head;
+  auto fast_ptr = head;
+  while (fast_ptr != nullptr) {
+    slow_ptr = slow_ptr->next;
+
+    // Take one step first to avoid null pointer
+    fast_ptr = fast_ptr->next;
+    if (fast_ptr != nullptr) {
+      fast_ptr = fast_ptr->next;
+    }
+
+    if (slow_ptr == fast_ptr)
+      break;
+  }
+
+  if (fast_ptr == nullptr) {
+    return nullptr;
+  }
+
+  fast_ptr = head;
+  while (fast_ptr != slow_ptr) {
+    fast_ptr = fast_ptr->next;
+    slow_ptr = slow_ptr->next;
+  }
+
+  return slow_ptr;
+}
