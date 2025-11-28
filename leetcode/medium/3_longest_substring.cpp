@@ -7,6 +7,13 @@ constraints:
 2) s consists of English letters, digits, symbols and spaces.
 */
 
+/*
+Solution:
+透過window sliding的想法，來找出最長的substring。
+也就是說，當沒重複的時候，windows會擴大，直到找到重複為止。
+而下一個windows的起點，就會從上一個重複點開始，並繼續擴大windows，直到下一個重複。
+*/
+
 #include <cstddef>
 #include <string>
 int lengthOfLongestSubstring(std::string s) {
