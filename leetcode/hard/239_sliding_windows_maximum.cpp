@@ -114,6 +114,10 @@ std::vector<int> maxSlidingWindow(std::vector<int> &nums, unsigned int k) {
         break;
       }
     }
+
+    if (candidates.empty()) {
+      candidates.push_back({nums[the_most_right], the_most_right});
+    }
   }
 
   return result;
