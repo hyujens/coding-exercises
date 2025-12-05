@@ -28,7 +28,6 @@ PS. queue裡會紀錄(值, 值的index)
 
 #include <algorithm>
 #include <deque>
-#include <utility>
 #include <vector>
 
 struct CandidateInfo {
@@ -82,25 +81,12 @@ std::vector<int> maxSlidingWindow(std::vector<int> &nums, unsigned int k) {
     return nums;
   }
 
-  int always_in_windows_start = nums.size() - k;
-  int always_in_windows_end = k;
-  bool has_always_in_windows = always_in_windows_start < always_in_windows_end;
-
   // prealloac the size since we know the length of the result.
   std::vector<int> result;
   int result_size = nums.size() - k + 1;
   result.reserve(result_size);
 
   auto candidates = get_candidates(nums, k);
-  if (has_always_in_windows) {
-    auto candidate = candidates.front();
-    if (candidate.pos >= always_in_windows_start &&
-        candidate.pos < always_in_windows_end) {
-      for (int i = 0; i < result_size; i++)
-        result.push_back(candidate.val);
-      return result;
-    }
-  }
 
   result.push_back(candidates.front().val);
   for (int i = 1; i < (nums.size() - k + 1); i++) {
