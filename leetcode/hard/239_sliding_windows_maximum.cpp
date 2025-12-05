@@ -88,15 +88,16 @@ std::vector<int> maxSlidingWindow(std::vector<int> &nums, unsigned int k) {
 
   // prealloac the size since we know the length of the result.
   std::vector<int> result;
-  result.reserve(nums.size() - k + 1);
+  int result_size = nums.size() - k + 1;
+  result.reserve(result_size);
 
   auto candidates = get_candidates(nums, k);
   if (has_always_in_windows) {
     auto candidate = candidates.front();
     if (candidate.pos >= always_in_windows_start &&
         candidate.pos < always_in_windows_end) {
-      for (int i = 0; i < result.size(); i++)
-        result[i] = candidate.val;
+      for (int i = 0; i < result_size; i++)
+        result.push_back(candidate.val);
       return result;
     }
   }
