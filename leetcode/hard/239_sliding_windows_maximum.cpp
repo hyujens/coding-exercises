@@ -122,3 +122,36 @@ std::vector<int> maxSlidingWindow(std::vector<int> &nums, unsigned int k) {
 
   return result;
 }
+
+std::vector<int> improvedMaxSlidingWindow(std::vector<int> &nums,
+                                          unsigned int k) {
+  std::deque<int> candidates; // record index
+  std::vector<int> result;
+  int result_size = nums.size() - k + 1;
+  result.reserve(result_size);
+
+  // 這個版本掌握一個核心概念:
+  // 值比右邊小就丟棄，這是因為，無論如何都不會被選中。
+  // 因此，每當要把值塞到candidates之前，就會清除比他小，然後再把自己塞進去。
+  for (int i = 0; i < nums.size(); i++) {
+    // 因為每次只會移動一次，所以最多只會有一個跑出windows之外。
+    int windows_start = i - k + 1;
+    if (!candidates.empty() && candidates.front() == (windows_start - 1))
+      candidates.pop_front();
+
+    // drop比當前值小的。
+    while (!candidates.empty() && nums[candidates.back()] < nums[i])
+      candidates.pop_back();
+
+    // 處理完後，把自己放進去。
+    candidates.push_back(i);
+
+    // 當處理完第一個windows的最後一個element，表示已建立好一開始初始的candidates。
+    // 那麼就可以開始把windows裡的最大值放到結果裡面。
+    if (i >= k - 1) {
+      result.push_back(nums[candidates.front()]);
+    }
+  }
+
+  return result;
+}
