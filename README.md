@@ -15,7 +15,7 @@
 * [v] Linked List - Reverse Linked List (206) - 鏈表反轉基礎
 * [v] Linked List - Linked List Cycle II (142) (新增) - 快慢指針與環的檢測
 * [v] Stack - Valid Parentheses (20) - Stack 經典應用
-* [ ] Queue/Monotonic - Sliding Window Maximum (239) - 單調隊列
+* [v] Queue/Monotonic - Sliding Window Maximum (239) - 單調隊列
 * [ ] Complex - Trapping Rain Water (42) (新增) - 雙指針/單調棧的綜合應用（魔王題）
 
 2. 樹相關 (9題)
