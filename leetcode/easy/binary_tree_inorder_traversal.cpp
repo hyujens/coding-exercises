@@ -23,3 +23,19 @@ std::vector<int> inorderTraversal(TreeNode *root) {
   result.insert(result.end(), right_result.begin(), right_result.end());
   return result;
 }
+
+// 上面每一次都需要建立跟銷毀vector物件，會有performance問題。
+// 所以這版本建立把vector傳進去的版本
+void inorderTraversal(TreeNode *root, std::vector<int> &result) {
+  if (root == nullptr)
+    return;
+  inorderTraversal(root->left, result);
+  result.push_back(root->val);
+  inorderTraversal(root->right, result);
+}
+
+std::vector<int> improvedInorderTraversal(TreeNode *root) {
+  std::vector<int> result;
+  inorderTraversal(root, result);
+  return result;
+}
