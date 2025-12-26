@@ -21,7 +21,7 @@
 2. 樹相關 (9題)
 此區重點：遞迴思維與樹的遍歷順序
 
-* [ ] Traversal - Binary Tree Inorder (94) - 遍歷基礎
+* [v] Traversal - Binary Tree Inorder (94) - 遍歷基礎
 * [ ] BFS - Binary Tree Level Order (102) - 層序遍歷
 * [ ] DFS - Maximum Depth of Binary Tree (104) - 深度優先
 * [ ] Reconstruct - Construct Binary Tree from Preorder and Inorder (105) (新增) - 遞迴重建樹
