@@ -3,6 +3,7 @@
  * values.
  */
 
+#include <stack>
 #include <vector>
 struct TreeNode {
   int val;
@@ -37,5 +38,23 @@ void inorderTraversal(TreeNode *root, std::vector<int> &result) {
 std::vector<int> improvedInorderTraversal(TreeNode *root) {
   std::vector<int> result;
   inorderTraversal(root, result);
+  return result;
+}
+
+std::vector<int> InorderTraversalIterativeVersion(TreeNode *root) {
+  std::vector<int> result;
+  std::stack<TreeNode *> st;
+  TreeNode *curr = root;
+
+  while (curr != nullptr || !st.empty()) {
+    while (curr != nullptr) {
+      st.push(curr);
+      curr = curr->left;
+    }
+    curr = st.top();
+    st.pop();
+    result.push_back(curr->val);
+    curr = curr->right;
+  }
   return result;
 }
