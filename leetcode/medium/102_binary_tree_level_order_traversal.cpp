@@ -48,3 +48,41 @@ std::vector<std::vector<int>> levelOrder(TreeNode *root) {
 
   return result;
 }
+
+void dfs(TreeNode *node, int level, std::vector<std::vector<int>> &result) {
+  if (!node) {
+    return;
+  }
+
+  // 確保當前層級的 vector 已建立
+  if (result.size() <= level) {
+    result.push_back({});
+  }
+
+  result[level].push_back(node->val);
+
+  dfs(node->left, level + 1, result);
+  dfs(node->right, level + 1, result);
+}
+
+/**
+ * DFS 版本實作 (使用遞迴)
+ *
+ * 為什麼 DFS 在 C++ LeetCode 環境中通常比 BFS 快?
+ *
+ * 1. 記憶體配置 (Memory Allocation):
+ *    - BFS 使用 std::queue，底層通常是 std::deque。這需要多次在 Heap (堆積)
+ * 上分配記憶體區塊。 記憶體分配 (malloc/new) 與釋放 (free/delete)
+ * 是昂貴的系統操作。
+ *    - DFS 使用 System Call Stack
+ * (系統堆疊)。這是在已分配好的連續記憶體上移動指標， 成本極低 (Zero-overhead)。
+ *
+ * 2. 快取親和性 (Cache Locality):
+ *    - DFS 存取 Stack 是連續的，對 CPU L1/L2 Cache 非常友善，Cache Hit率高。
+ *    - BFS 的 Queue Node 散落在 Heap 各處，存取時容易造成 Cache Miss。
+ */
+std::vector<std::vector<int>> levelOrderWithDFS(TreeNode *root) {
+  std::vector<std::vector<int>> result;
+  dfs(root, 0, result);
+  return result;
+}
