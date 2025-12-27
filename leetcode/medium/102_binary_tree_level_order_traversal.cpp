@@ -80,6 +80,20 @@ void dfs(TreeNode *node, int level, std::vector<std::vector<int>> &result) {
  * 2. 快取親和性 (Cache Locality):
  *    - DFS 存取 Stack 是連續的，對 CPU L1/L2 Cache 非常友善，Cache Hit率高。
  *    - BFS 的 Queue Node 散落在 Heap 各處，存取時容易造成 Cache Miss。
+ *
+ * 不同語言的適用情況 (Language Specifics):
+ * C++, C, Rust, Go (系統級語言):
+ *    - DFS 通常較快。這些語言的遞迴直接對應硬體
+ * Stack，開銷極小，且編譯器優化強大。
+ *
+ * Python, JavaScript, Ruby (直譯/腳本語言):
+ *    - BFS 通常較快或持平。這些語言的函式呼叫開銷巨大 (Function Call
+ * Overhead)， 且深度遞迴可能導致 Recursion Limit Error。迴圈 (BFS)
+ * 反而比較輕量。
+ *
+ * Java, C# (託管語言):
+ *    - case-by-case。JVM/CLR 對 Stack 操作有優化，DFS 因為少建物件 (GC 壓力小)
+ *      通常有優勢，但太深仍有 StackOverflow 風險。
  */
 std::vector<std::vector<int>> levelOrderWithDFS(TreeNode *root) {
   std::vector<std::vector<int>> result;
