@@ -30,8 +30,9 @@ std::vector<std::vector<int>> levelOrder(TreeNode *root) {
 
   q.push(root);
   while (!q.empty()) {
-    std::vector<int> found;
     int handle_size = q.size();
+    std::vector<int> found;
+    found.reserve(handle_size);
     for (int i = 0; i < handle_size; i++) {
       TreeNode *v = q.front();
       q.pop();
