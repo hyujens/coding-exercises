@@ -22,7 +22,7 @@
 此區重點：遞迴思維與樹的遍歷順序
 
 * [v] Traversal - Binary Tree Inorder (94) - 遍歷基礎
-* [ ] BFS - Binary Tree Level Order (102) - 層序遍歷
+* [v] BFS - Binary Tree Level Order (102) - 層序遍歷
 * [ ] DFS - Maximum Depth of Binary Tree (104) - 深度優先
 * [ ] Reconstruct - Construct Binary Tree from Preorder and Inorder (105) (新增) - 遞迴重建樹
 * [ ] BST - Validate BST (98) - BST 性質驗證
