@@ -10,6 +10,7 @@
  * 2. -100 <= Node.val <= 100
  */
 
+#include <algorithm>
 struct TreeNode {
   int val;
   TreeNode *left, *right;
@@ -22,8 +23,6 @@ struct TreeNode {
 int maxDepth(TreeNode *root) {
   if (root == nullptr)
     return 0;
-  int left_value = maxDepth(root->left);
-  int right_value = maxDepth(root->right);
-  int val = left_value > right_value ? left_value : right_value;
-  return val + 1;
+
+  return std::max(maxDepth(root->left), maxDepth(root->right)) + 1;
 }
