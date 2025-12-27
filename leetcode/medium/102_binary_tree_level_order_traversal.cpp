@@ -8,7 +8,6 @@
  * 2. -1000 <= Node.val <= 1000
  */
 
-#include <algorithm>
 #include <queue>
 #include <vector>
 
