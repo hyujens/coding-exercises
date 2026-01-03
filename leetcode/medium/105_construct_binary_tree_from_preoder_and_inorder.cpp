@@ -16,6 +16,7 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <unordered_map>
 #include <vector>
 
 struct TreeNode {
@@ -66,4 +67,38 @@ TreeNode *buildTree(std::vector<int> &preorder, std::vector<int> &inorder) {
                        &result->right);
 
   return result;
+}
+
+// Helper function for O(N) solution
+TreeNode *buildTreeHelper(std::vector<int> &preorder, int &preIndex,
+                          std::unordered_map<int, int> &inorderMap, int inStart,
+                          int inEnd) {
+  // TODO: Implement the recursive logic here
+  // 1. Base case: if inStart >= inEnd, return nullptr
+  // 2. Create node with value preorder[preIndex]
+  // 3. Increment preIndex
+  // 4. Find split position using inorderMap
+  // 5. Recursively build left and right subtrees
+  if (inStart >= inEnd)
+    return nullptr;
+
+  TreeNode *elem = new (TreeNode);
+  elem->val = preorder[preIndex];
+  preIndex += 1;
+
+  int pos = inorderMap[elem->val];
+  elem->left = buildTreeHelper(preorder, preIndex, inorderMap, inStart, pos);
+  elem->right = buildTreeHelper(preorder, preIndex, inorderMap, pos + 1, inEnd);
+  return elem;
+}
+
+TreeNode *improvedBuildTree(std::vector<int> &preorder,
+                            std::vector<int> &inorder) {
+  std::unordered_map<int, int> inorderMap;
+  for (int i = 0; i < inorder.size(); ++i) {
+    inorderMap[inorder[i]] = i;
+  }
+  int preIndex = 0;
+  // Using [inStart, inEnd) half-open interval convention
+  return buildTreeHelper(preorder, preIndex, inorderMap, 0, inorder.size());
 }
