@@ -13,6 +13,8 @@
  * 2) -2^31 <= Node.val <= 2^31 - 1
  */
 
+#include <climits>
+#include <cstddef>
 struct TreeNode {
   int val;
   TreeNode *left, *right;
@@ -56,4 +58,22 @@ Record validationHelper(TreeNode *root) {
 bool isValidBST(TreeNode *root) {
   Record record = validationHelper(root);
   return record.broken == false;
+}
+
+// 下面版本採用inorder方式。如果是合法的binary tree，那麼透過inorder
+// traversal，值會按照大小排好。
+long prev = LONG_MIN;
+bool isValidBSTWithInorder(TreeNode *root) {
+  if (root == nullptr)
+    return true;
+
+  if (!isValidBSTWithInorder(root->left))
+    return false;
+
+  if (root->val <= prev)
+    return false;
+
+  prev = root->val;
+
+  return isValidBSTWithInorder(root->right);
 }
