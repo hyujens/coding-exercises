@@ -79,9 +79,6 @@ TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q) {
     auto p_record = record[p];
     auto q_record = record[q];
 
-    if (p_record.parent == q_record.parent)
-      return p_record.parent;
-
     if (p_record.level < q_record.level) {
       q = q_record.parent;
       continue;
