@@ -15,6 +15,7 @@
  */
 
 #include <cstddef>
+#include <stack>
 #include <unordered_map>
 struct TreeNode {
   int val;
@@ -39,9 +40,39 @@ void buildRecord(TreeNode *root, TreeNode *parent, int level,
   buildRecord(root->left, root, level + 1, record);
 }
 
+// 在這例子中，當10^5
+// nodes在最糟情況是行程一直線。那麼會造成過深的recursion (超過c++預設的stack
+// size)，這可能導致stack overflow。 因此這個function採用stack data
+// structure來取代function recursion。
+struct State {
+  TreeNode *node;
+  TreeNode *parent;
+  int level;
+};
+void buildRecordWithStack(TreeNode *root, TreeNode *parent, int level,
+                          std::unordered_map<TreeNode *, Record> &record) {
+  std::stack<State> stk;
+  stk.push({root, parent, level});
+
+  // DFS
+  while (!stk.empty()) {
+    State current = stk.top();
+    stk.pop();
+
+    if (current.node == nullptr)
+      continue;
+    record[current.node] = Record{current.level, current.parent};
+    if (current.node->right)
+      stk.push({current.node->right, current.node, current.level + 1});
+    if (current.node->left)
+      stk.push({current.node->left, current.node, current.level + 1});
+  }
+}
+
 TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q) {
   std::unordered_map<TreeNode *, Record> record;
-  buildRecord(root, nullptr, 0, record);
+  // buildRecord(root, nullptr, 0, record);
+  buildRecordWithStack(root, nullptr, 0, record);
   while (true) {
     if (p == q)
       return p;
