@@ -25,7 +25,7 @@
 * [v] BFS - Binary Tree Level Order (102) - 層序遍歷
 * [v] DFS - Maximum Depth of Binary Tree (104) - 深度優先
 * [v] Reconstruct - Construct Binary Tree from Preorder and Inorder (105) (新增) - 遞迴重建樹
-* [ ] BST - Validate BST (98) - BST 性質驗證
+* [v] BST - Validate BST (98) - BST 性質驗證
 * [ ] LCA - Lowest Common Ancestor (236) - 最近公共祖先思維
 * [ ] Serialize - Serialize and Deserialize Binary Tree (297) - 序列化技巧
 * [ ] Trie - Implement Trie (208) - 字典樹實作
