@@ -17,6 +17,7 @@
 #include <cstddef>
 #include <stack>
 #include <unordered_map>
+#include <unordered_set>
 struct TreeNode {
   int val;
   TreeNode *left, *right;
@@ -91,4 +92,56 @@ TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q) {
     p = p_record.parent;
     q = q_record.parent;
   }
+}
+
+// ======= optimization 1
+// 1. Early stop: 只要找到 p 和 q 就可以停止
+// 2. 先從 p 往上走，將路徑上的節點存入一個 HashSet。接著從 q
+// 往上走，遇到的第一個存在於 Set 中的節點即為 LCA。
+void buildRecordEarlyStop(TreeNode *root, TreeNode *p, TreeNode *q,
+                          std::unordered_map<TreeNode *, TreeNode *> &record) {
+  record[root] = nullptr;
+  std::stack<TreeNode *> stk;
+  stk.push(root);
+  while (!stk.empty()) {
+    TreeNode *current = stk.top();
+    stk.pop();
+    if (current->left != nullptr) {
+      record[current->left] = current;
+      stk.push(current->left);
+    }
+    if (current->right != nullptr) {
+      record[current->right] = current;
+      stk.push(current->right);
+    }
+
+    // 只有都找到才停止。如果停止其一節點，會導致這節點以下都不會去探索。
+    if (record.find(p) != record.end() && record.find(q) != record.end())
+      return;
+  }
+}
+
+TreeNode *lowestCommonAncestorV1(TreeNode *root, TreeNode *p, TreeNode *q) {
+  if (p == nullptr || q == nullptr)
+    return nullptr;
+  std::unordered_map<TreeNode *, TreeNode *> record;
+  buildRecordEarlyStop(root, p, q, record);
+  TreeNode *result = nullptr;
+  std::unordered_set<TreeNode *> traversed;
+
+  while (p != nullptr) {
+    traversed.insert(p);
+    p = record[p];
+  }
+
+  while (q != nullptr) {
+    if (traversed.count(q) != 0) {
+      result = q;
+      break;
+    }
+
+    q = record[q];
+  }
+
+  return result;
 }
