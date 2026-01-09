@@ -145,3 +145,27 @@ TreeNode *lowestCommonAncestorV1(TreeNode *root, TreeNode *p, TreeNode *q) {
 
   return result;
 }
+
+// ======= optimization 2
+// 這個解法比較巧思。需要透過遞回來解。
+// 如果找到p就回傳p，找q就回傳q。
+// 因此，在遞回呼叫function。一定會在某一level得到p跟q個出現在左右。
+// 根據題目，p跟q都是有效的情況，最糟情況就是在root找到。
+TreeNode *lowestCommonAncestorV2(TreeNode *root, TreeNode *p, TreeNode *q) {
+  if (root == nullptr)
+    return nullptr;
+  if (root == p)
+    return p;
+  if (root == q)
+    return q;
+
+  TreeNode *left = lowestCommonAncestorV2(root->left, p, q);
+  TreeNode *right = lowestCommonAncestorV2(root->right, p, q);
+  // 如果左右非null，表示一定有找到p & q。
+  if (left && right)
+    return root;
+
+  if (left != nullptr)
+    return left;
+  return right;
+}
