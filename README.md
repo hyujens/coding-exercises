@@ -28,7 +28,7 @@
 * [v] BST - Validate BST (98) - BST 性質驗證
 * [v] LCA - Lowest Common Ancestor (236) - 最近公共祖先思維
 * [ ] Serialize - Serialize and Deserialize Binary Tree (297) - 序列化技巧
-* [ ] Trie - Implement Trie (208) - 字典樹實作
+* [v] Trie - Implement Trie (208) - 字典樹實作
 * [ ] Segment Tree - Range Sum Query Mutable (307) - 線段樹（進階，時間不夠可跳過）
 
 3. 圖論 (7題)
