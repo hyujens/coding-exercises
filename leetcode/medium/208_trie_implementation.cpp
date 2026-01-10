@@ -38,6 +38,13 @@ public:
       children[i] = nullptr;
     }
   }
+
+  ~TrieNode() {
+    for (int i = 0; i < 26; i++) {
+      if (children[i] != nullptr)
+        delete children[i]; // 遞迴觸發子節點的desconstructor
+    }
+  }
 };
 
 class Trie {
@@ -46,16 +53,7 @@ class Trie {
 public:
   Trie() : root(new TrieNode()) {}
 
-  ~Trie() { releaseTrie(root); }
-
-  void releaseTrie(TrieNode *node) {
-    for (int i = 0; i < 26; i++) {
-      if (node->children[i] != nullptr)
-        releaseTrie(node->children[i]);
-    }
-
-    delete node;
-  }
+  ~Trie() { delete root; }
 
   void insert(const std::string &word) {
     TrieNode *curr = root;
