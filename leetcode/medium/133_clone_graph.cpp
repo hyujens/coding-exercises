@@ -6,6 +6,7 @@
  */
 
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 class Node {
@@ -30,19 +31,16 @@ Node *cloneHelper(Node *node, std::unordered_map<Node *, Node *> &records) {
   if (node == nullptr)
     return nullptr;
 
+  if (records.find(node) != records.end())
+    return records[node];
+
   Node *newNode = new (Node);
   newNode->val = node->val;
   records[node] = newNode;
 
-  std::vector<Node *> clones;
   for (auto item : node->neighbors) {
-    if (records.find(item) != records.end()) {
-      clones.push_back(records[item]);
-    } else
-      clones.push_back(cloneHelper(item, records));
+    newNode->neighbors.push_back(cloneHelper(item, records));
   }
-
-  newNode->neighbors = clones;
 
   return newNode;
 }
