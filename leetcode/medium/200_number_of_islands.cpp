@@ -11,6 +11,22 @@
 #include <vector>
 int numIslands(std::vector<std::vector<char>> &grid) {
   int islands = 0;
+
+  if (grid.size() == 0 || grid[0].size() == 0)
+    return islands;
+
+  const int dirs[4][2] = {
+      {-1, 0}, // top
+      {1, 0},  // buttom
+      {0, -1}, // left
+      {0, 1},  // right
+  };
+
+  // since passed value is a m x n matrix, it means we won't get various length
+  // for each row or each column.
+  int totalSizeInRow = grid.size();
+  int totalSizeInColumn = grid[0].size();
+
   for (int i = 0; i < grid.size(); i++) {
     for (int j = 0; j < grid[i].size(); j++) {
       if (grid[i][j] != '1')
@@ -19,30 +35,18 @@ int numIslands(std::vector<std::vector<char>> &grid) {
       islands++;
       std::queue<std::pair<int, int>> queue;
       grid[i][j] = '2';
-      queue.push(std::pair<int, int>(i, j));
+      queue.push({i, j});
       while (!queue.empty()) {
         auto v = queue.front();
         queue.pop();
-        // 1. check left
-        if (v.second - 1 >= 0 && grid[v.first][v.second - 1] == '1') {
-          grid[v.first][v.second - 1] = '2';
-          queue.push(std::pair<int, int>(v.first, v.second - 1));
-        }
-        // 2. check right
-        if (v.second + 1 < grid[v.first].size() &&
-            grid[v.first][v.second + 1] == '1') {
-          grid[v.first][v.second + 1] = '2';
-          queue.push(std::pair<int, int>(v.first, v.second + 1));
-        }
-        // 3. check top
-        if (v.first - 1 >= 0 && grid[v.first - 1][v.second] == '1') {
-          grid[v.first - 1][v.second] = '2';
-          queue.push(std::pair<int, int>(v.first - 1, v.second));
-        }
-        // 4. check buttom
-        if (v.first + 1 < grid.size() && grid[v.first + 1][v.second] == '1') {
-          grid[v.first + 1][v.second] = '2';
-          queue.push(std::pair<int, int>(v.first + 1, v.second));
+        for (const auto &d : dirs) {
+          int ni = v.first + d[0];
+          int nj = v.second + d[1];
+          if (ni >= 0 && ni < totalSizeInRow && nj >= 0 &&
+              nj < totalSizeInColumn && grid[ni][nj] == '1') {
+            grid[ni][nj] = '2';
+            queue.push({ni, nj});
+          }
         }
       }
     }
