@@ -47,3 +47,32 @@ int findCircleNum(std::vector<std::vector<int>> &isConnected) {
 
   return provinces;
 }
+
+int improvedFindCircleNum(std::vector<std::vector<int>> &isConnected) {
+  std::vector<bool> visited(isConnected.size(), false);
+
+  int provinces = 0;
+  for (int i = 0; i < visited.size(); i++) {
+    if (visited[i])
+      continue;
+
+    std::queue<int> queue;
+    queue.push(i);
+    visited[i] = true;
+    provinces++;
+
+    while (!queue.empty()) {
+      int v = queue.front();
+      queue.pop();
+
+      for (int j = 0; j < isConnected[v].size(); j++) {
+        if (isConnected[v][j] == 1 && visited[j] == false) {
+          queue.push(j);
+          visited[j] = true;
+        }
+      }
+    }
+  }
+
+  return provinces;
+}
