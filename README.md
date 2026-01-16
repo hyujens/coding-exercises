@@ -34,7 +34,7 @@
 3. 圖論 (7題)
 此區重點：圖的建立、遍歷與最短路徑
 
-* [ ] DFS/BFS - Number of Islands (200) - 網格圖遍歷
+* [v] DFS/BFS - Number of Islands (200) - 網格圖遍歷
 * [ ] Graph Copy - Clone Graph (133) (新增) - 圖的深拷貝與映射
 * [ ] Union Find - Number of Provinces (547) - 並查集應用
 * [ ] Topological - Course Schedule (207) - 拓撲排序（檢測環）
