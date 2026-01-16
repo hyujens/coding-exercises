@@ -31,11 +31,13 @@ Node *cloneHelper(Node *node, std::unordered_map<Node *, Node *> &records) {
   if (node == nullptr)
     return nullptr;
 
-  if (records.find(node) != records.end())
-    return records[node];
+  auto it = records.find(node);
+  if (it != records.end())
+    return it->second;
 
-  Node *newNode = new (Node);
-  newNode->val = node->val;
+  Node *newNode = new Node(node->val);
+  // 既然知道有多少elemets，預留空間，以避免觸發重新配置 (reallocation)與搬移。
+  newNode->neighbors.reserve(node->neighbors.size());
   records[node] = newNode;
 
   for (auto item : node->neighbors) {
@@ -47,7 +49,6 @@ Node *cloneHelper(Node *node, std::unordered_map<Node *, Node *> &records) {
 
 Node *cloneGraph(Node *node) {
   std::unordered_map<Node *, Node *> records;
-  Node *result = cloneHelper(node, records);
 
-  return result;
+  return cloneHelper(node, records);
 }
