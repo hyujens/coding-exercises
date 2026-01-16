@@ -17,35 +17,43 @@ int numIslands(std::vector<std::vector<char>> &grid) {
 
   const int dirs[4][2] = {
       {-1, 0}, // top
-      {1, 0},  // buttom
+      {1, 0},  // bottom
       {0, -1}, // left
       {0, 1},  // right
   };
 
   // since passed value is a m x n matrix, it means we won't get various length
   // for each row or each column.
-  int totalSizeInRow = grid.size();
-  int totalSizeInColumn = grid[0].size();
+  int m = grid.size();
+  int n = grid[0].size();
 
-  for (int i = 0; i < grid.size(); i++) {
-    for (int j = 0; j < grid[i].size(); j++) {
+  // grid.size() 回傳的是 size_t (unsigned type)，而 i 是 int (signed
+  // type)。大多數編譯器會給出 -Wsign-compare 警告。
+  // 所以改用m跟n
+  // for (int i = 0; i < grid.size(); i++) {
+  for (int i = 0; i < m; i++) {
+    for (int j = 0; j < n; j++) {
+      //  for (int j = 0; j < grid[i].size(); j++) {
       if (grid[i][j] != '1')
         continue;
 
       islands++;
       std::queue<std::pair<int, int>> queue;
       grid[i][j] = '2';
-      queue.push({i, j});
+      // 實際上它還是會先建立一個暫存的 std::pair 物件，然後再 Copy/Move 進
+      // Queue。 queue.push({i, j}); emplace 可以在 Queue
+      // 的尾端直接「原地構造」物件，完全省去暫存物件的建立與移動成本。
+      queue.emplace(i, j);
       while (!queue.empty()) {
         auto v = queue.front();
         queue.pop();
         for (const auto &d : dirs) {
           int ni = v.first + d[0];
           int nj = v.second + d[1];
-          if (ni >= 0 && ni < totalSizeInRow && nj >= 0 &&
-              nj < totalSizeInColumn && grid[ni][nj] == '1') {
+          if (ni >= 0 && ni < m && nj >= 0 && nj < n && grid[ni][nj] == '1') {
             grid[ni][nj] = '2';
-            queue.push({ni, nj});
+            // queue.push({ni, nj});
+            queue.emplace(ni, nj);
           }
         }
       }
