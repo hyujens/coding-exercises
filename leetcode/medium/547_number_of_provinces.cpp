@@ -76,3 +76,39 @@ int improvedFindCircleNum(std::vector<std::vector<int>> &isConnected) {
 
   return provinces;
 }
+
+// version by Gemini 3 pro
+// 加上 const 確保不修改輸入
+int modernFindCircleNum(const std::vector<std::vector<int>> &isConnected) {
+  if (isConnected.empty())
+    return 0;
+
+  const int n = isConnected.size();
+  std::vector<bool> visited(n, false);
+  int provinces = 0;
+  for (int i = 0; i < n; ++i) {
+    if (visited[i])
+      continue;
+    // 發現新省份
+    provinces++;
+    std::queue<int> q; // 改名 queue -> q
+    q.push(i);
+    visited[i] = true;
+    while (!q.empty()) {
+      int v = q.front();
+      q.pop();
+      // 在這裡使用 const reference 避免複製 inner vector (雖 int vector
+      // 複製不貴，但若是大物件就有差)
+      const auto &neighbors = isConnected[v];
+
+      for (int j = 0; j < n; ++j) {
+        // 使用 !visited[j] 語法較直覺
+        if (neighbors[j] == 1 && !visited[j]) {
+          q.push(j);
+          visited[j] = true;
+        }
+      }
+    }
+  }
+  return provinces;
+}
