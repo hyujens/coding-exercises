@@ -18,8 +18,11 @@
  * 5) All the pairs prerequisites[i] are unique.
  */
 
-#include <unordered_set>
 #include <vector>
+
+const int UNVISITED = 0;
+const int VISITING = 1;
+const int VISITED = 2;
 
 // when cycle happens, it means it is not possible to finish courses.
 // @startPoint specifies the search point
@@ -28,29 +31,28 @@
 // @visited records courses have been explored and we can skip to explore when
 // the course has been visited.
 bool isCycle(int startPoint, std::vector<std::vector<int>> &graph,
-             std::unordered_set<int> &path, std::vector<bool> &visited) {
-  path.insert(startPoint);
-  visited[startPoint] = true;
+             std::vector<int> &visited) {
+  visited[startPoint] = VISITING;
   bool cycleFound = false;
 
   for (int i = 0; i < graph[startPoint].size(); i++) {
     auto courseForCheck = graph[startPoint][i];
-    if (path.find(graph[startPoint][i]) != path.end()) {
+    if (visited[courseForCheck] == VISITING) {
       cycleFound = true;
       break;
     }
 
     // 既然course不在path上，但曾經處理過。這表示在這course之後都處理過。
     // 因此，這必然不會有cycle，所以略過，並從鄰居開始找。
-    if (visited[courseForCheck])
+    if (visited[courseForCheck] == VISITED)
       continue;
 
-    cycleFound = isCycle(courseForCheck, graph, path, visited);
+    cycleFound = isCycle(courseForCheck, graph, visited);
     if (cycleFound)
       break;
   }
 
-  path.erase(startPoint);
+  visited[startPoint] = VISITED;
   return cycleFound;
 }
 
@@ -64,14 +66,13 @@ bool canFinish(int numCourses, std::vector<std::vector<int>> &prerequisites) {
     graph[courses[0]].push_back(courses[1]);
   }
 
-  std::vector<bool> visited(numCourses, false);
-  std::unordered_set<int> path;
+  std::vector<int> visited(numCourses, UNVISITED);
 
   for (int i = 0; i < visited.size(); i++) {
-    if (visited[i])
+    if (visited[i] != UNVISITED)
       continue;
 
-    bool cycleFound = isCycle(i, graph, path, visited);
+    bool cycleFound = isCycle(i, graph, visited);
     if (cycleFound)
       return false;
   }
