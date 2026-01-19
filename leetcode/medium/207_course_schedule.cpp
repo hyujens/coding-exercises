@@ -34,19 +34,18 @@ bool isCycle(int startPoint, std::vector<std::vector<int>> &graph,
   bool cycleFound = false;
 
   for (int i = 0; i < graph[startPoint].size(); i++) {
-    if (graph[startPoint][i] == 0)
-      continue;
-    if (path.find(i) != path.end()) {
+    auto courseForCheck = graph[startPoint][i];
+    if (path.find(graph[startPoint][i]) != path.end()) {
       cycleFound = true;
       break;
     }
 
     // 既然course不在path上，但曾經處理過。這表示在這course之後都處理過。
     // 因此，這必然不會有cycle，所以略過，並從鄰居開始找。
-    if (visited[i])
+    if (visited[courseForCheck])
       continue;
 
-    cycleFound = isCycle(i, graph, path, visited);
+    cycleFound = isCycle(courseForCheck, graph, path, visited);
     if (cycleFound)
       break;
   }
@@ -57,13 +56,12 @@ bool isCycle(int startPoint, std::vector<std::vector<int>> &graph,
 
 bool canFinish(int numCourses, std::vector<std::vector<int>> &prerequisites) {
   // build graph
-  std::vector<std::vector<int>> graph(numCourses,
-                                      std::vector<int>(numCourses, 0));
+  std::vector<std::vector<int>> graph(numCourses);
   for (auto courses : prerequisites) {
     // illegal course design
     if (courses.size() != 2)
       return false;
-    graph[courses[0]][courses[1]] = 1;
+    graph[courses[0]].push_back(courses[1]);
   }
 
   std::vector<bool> visited(numCourses, false);
