@@ -37,7 +37,7 @@
 * [v] DFS/BFS - Number of Islands (200) - 網格圖遍歷
 * [v] Graph Copy - Clone Graph (133) (新增) - 圖的深拷貝與映射
 * [v] Union Find - Number of Provinces (547) - 並查集應用
-* [ ] Topological - Course Schedule (207) - 拓撲排序（檢測環）
+* [v] Topological - Course Schedule (207) - 拓撲排序（檢測環）
 * [ ] Dijkstra - Network Delay Time (743) - 單源最短路徑
 * [ ] MST - Min Cost to Connect All Points (1584) - 最小生成樹 (Prim/Kruskal)
 * [ ] Bipartite - Is Graph Bipartite (785) - 二分圖染色
