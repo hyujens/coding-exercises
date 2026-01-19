@@ -27,7 +27,6 @@ const int VISITED = 2;
 // when cycle happens, it means it is not possible to finish courses.
 // @startPoint specifies the search point
 // @graph specifies the built graph of course relation
-// @path specifies the current path we explore
 // @visited records courses have been explored and we can skip to explore when
 // the course has been visited.
 bool isCycle(int startPoint, std::vector<std::vector<int>> &graph,
@@ -35,8 +34,7 @@ bool isCycle(int startPoint, std::vector<std::vector<int>> &graph,
   visited[startPoint] = VISITING;
   bool cycleFound = false;
 
-  for (int i = 0; i < graph[startPoint].size(); i++) {
-    auto courseForCheck = graph[startPoint][i];
+  for (int courseForCheck : graph[startPoint]) {
     if (visited[courseForCheck] == VISITING) {
       cycleFound = true;
       break;
@@ -59,11 +57,14 @@ bool isCycle(int startPoint, std::vector<std::vector<int>> &graph,
 bool canFinish(int numCourses, std::vector<std::vector<int>> &prerequisites) {
   // build graph
   std::vector<std::vector<int>> graph(numCourses);
-  for (auto courses : prerequisites) {
+  for (auto relation : prerequisites) {
     // illegal course design
-    if (courses.size() != 2)
+    if (relation.size() != 2)
       return false;
-    graph[courses[0]].push_back(courses[1]);
+
+    int course = relation[0];
+    int dependOnCourse = relation[1];
+    graph[course].emplace_back(dependOnCourse);
   }
 
   std::vector<int> visited(numCourses, UNVISITED);
