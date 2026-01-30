@@ -45,7 +45,7 @@
 4. 動態規劃 (13題)
 此區重點：定義狀態 (State) 與 轉移方程 (Transition)
 
-* [ ] 1D DP - Climbing Stairs (70) - DP 入門
+* [v] 1D DP - Climbing Stairs (70) - DP 入門
 * [ ] 1D DP - House Robber (198) - 非連續選擇
 * [ ] Subarray - Maximum Product Subarray (152) (新增) - 雙狀態維護 (Min/Max)
 * [ ] LIS - Longest Increasing Subsequence (300) - LIS 經典 O(NlogN)
