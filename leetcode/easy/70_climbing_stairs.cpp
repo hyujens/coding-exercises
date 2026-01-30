@@ -10,7 +10,17 @@
  */
 
 #include <vector>
-std::vector<int> records;
+
+int climbStairsHelp(int n, std::vector<int> &records) {
+  if (records[n] != 0)
+    return records[n];
+
+  int val = climbStairsHelp(n - 1, records);
+  val += records[n - 2];
+  records[n] = val;
+
+  return val;
+}
 
 int climbStairs(int n) {
   if (n == 1)
@@ -18,19 +28,13 @@ int climbStairs(int n) {
   if (n == 2)
     return 2;
 
-  if (records.empty()) {
-    // no initialization and let's make it.
-    records.reserve(n + 1);
-    for (int i = 0; i <= n; i++)
-      records.emplace_back(0);
+  std::vector<int> records;
+  records.reserve(n + 1);
+  for (int i = 0; i <= n; i++)
+    records.emplace_back(0);
 
-    records[1] = 1;
-    records[2] = 2;
-  }
+  records[1] = 1;
+  records[2] = 2;
 
-  int val = climbStairs(n - 1);
-  val += records[n - 2];
-  records[n] = val;
-
-  return val;
+  return climbStairsHelp(n, records);
 }
