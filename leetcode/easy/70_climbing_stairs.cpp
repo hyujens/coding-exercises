@@ -38,3 +38,42 @@ int climbStairs(int n) {
 
   return climbStairsHelp(n, records);
 }
+
+int climbStairsV2(int n) {
+  if (n == 1)
+    return 1;
+  if (n == 2)
+    return 2;
+
+  std::vector<int> records;
+  records.reserve(n + 1);
+  records.push_back(0);
+  records.push_back(1);
+  records.push_back(2);
+
+  for (int i = 3; i <= n; i++) {
+    records.push_back(records[i - 1] + records[i - 2]);
+  }
+
+  return records[n];
+}
+
+int climbStairsV3(int n) {
+  if (n == 1)
+    return 1;
+  if (n == 2)
+    return 2;
+
+  // val_n_1 means (n - 1)th from nth elements
+  int val_n_1 = 2;
+  // val_n_2 means (n - 2)th from nth elements
+  int val_n_2 = 1;
+  int val = 0;
+  for (int i = 3; i <= n; i++) {
+    val = val_n_1 + val_n_2;
+    val_n_2 = val_n_1;
+    val_n_1 = val;
+  }
+
+  return val;
+}
